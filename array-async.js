@@ -9,9 +9,9 @@
     function everyFn(next, e, i, a) {
       function everyNext(value) {
         if (value) {
-          next(undefined, value);
+          next(undefined, !!value);
         } else {
-          next(forEachAsync.__BREAK, value);
+          next(forEachAsync.__BREAK, !!value);
         }
       }
       fn.call(thisArg, everyNext, e, i, a);
@@ -23,9 +23,9 @@
     function someFn(next, e, i, a) {
       function someNext(value) {
         if (value) {
-          next(forEachAsync.__BREAK, value);
+          next(forEachAsync.__BREAK, !!value);
         } else {
-          next(undefined, value);
+          next(undefined, !!value);
         }
       }
       fn.call(thisArg, someNext, e, i, a);
