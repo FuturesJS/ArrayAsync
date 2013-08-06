@@ -2,7 +2,7 @@
 (function (exports) {
   "use strict";
 
-  var forEachAsync = exports.forEachAsync || require('forEachAsync').forEachAsync
+  var forEachAsync = exports.forEachAsync || require('../forEachAsync/forEachAsync').forEachAsync
     ;
 
   function everyAsync(arr, fn, thisArg) {
@@ -64,7 +64,7 @@
   }
 
   function reduceAsync(arr, fn, thisArg) {
-    var result = null
+    var result = arr[0]
       ;
 
     function reduceFn(next, e, i, a) {
@@ -72,14 +72,23 @@
         result = value;
         next(undefined, result);
       }
-      fn.call(thisArg, reduceNext, result, e, i, a);
+      fn.call(thisArg, reduceNext, result, e, i + 1, a);
     }
-    return forEachAsync(arr, reduceFn, thisArg);
+    return forEachAsync(arr.slice(1), reduceFn, thisArg);
   }
 
   function reduceRightAsync(arr, fn, thisArg) {
-    // How to best follow the principle of least surprise here?
-    return reduceAsync(arr.slice(0).reverse(), fn, thisArg);
+    var result = arr[arr.length - 1]
+      ;
+
+    function reduceRightFn(next, e, i, a) {
+      function reduceRightNext(value) {
+        result = value;
+        next(undefined, result);
+      }
+      fn.call(thisArg, reduceRightNext, result, e, a.length - (i + 1), a);
+    }
+    return forEachAsync(arr.slice(0, arr.length - 1).reverse(), reduceRightFn, thisArg);
   }
 
   exports.forEachAsync = forEachAsync;
