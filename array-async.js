@@ -2,7 +2,7 @@
 (function (exports) {
   "use strict";
 
-  var forEachAsync = require('../forEachAsync/forEachAsync').forEachAsync
+  var forEachAsync = exports.forEachAsync || require('forEachAsync').forEachAsync
     ;
 
   function everyAsync(arr, fn, thisArg) {
