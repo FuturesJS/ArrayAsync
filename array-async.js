@@ -1,101 +1,107 @@
 /*jshint -W054 */
 (function (exports) {
-  "use strict";
+  'use strict';
 
   var forEachAsync = exports.forEachAsync || require('../forEachAsync/forEachAsync').forEachAsync
+    , ArrayAsync
     ;
 
-  function everyAsync(arr, fn, thisArg) {
-    function everyFn(next, e, i, a) {
-      function everyNext(value) {
-        if (value) {
-          next(undefined, !!value);
-        } else {
-          next(forEachAsync.__BREAK, !!value);
+  ArrayAsync = {
+    forEach: forEachAsync
+  , every: function (arr, fn, thisArg) {
+      function everyFn(next, e, i, a) {
+        function everyNext(value) {
+          if (value) {
+            next(undefined, !!value);
+          } else {
+            next(forEachAsync.__BREAK, !!value);
+          }
         }
+        fn.call(thisArg, everyNext, e, i, a);
       }
-      fn.call(thisArg, everyNext, e, i, a);
+      return forEachAsync(arr, everyFn, thisArg);
     }
-    return forEachAsync(arr, everyFn, thisArg);
-  }
 
-  function someAsync(arr, fn, thisArg) {
-    function someFn(next, e, i, a) {
-      function someNext(value) {
-        if (value) {
-          next(forEachAsync.__BREAK, !!value);
-        } else {
-          next(undefined, !!value);
+  , some: function (arr, fn, thisArg) {
+      function someFn(next, e, i, a) {
+        function someNext(value) {
+          if (value) {
+            next(forEachAsync.__BREAK, !!value);
+          } else {
+            next(undefined, !!value);
+          }
         }
+        fn.call(thisArg, someNext, e, i, a);
       }
-      fn.call(thisArg, someNext, e, i, a);
+      return forEachAsync(arr, someFn, thisArg);
     }
-    return forEachAsync(arr, someFn, thisArg);
-  }
 
-  function filterAsync(arr, fn, thisArg) {
-    var newArr = []
-      ;
+  , filter: function (arr, fn, thisArg) {
+      var newArr = []
+        ;
 
-    function filterFn(next, e, i, a) {
-      function filterNext(value) {
-        if (value) {
-          newArr.push(e);
+      function filterFn(next, e, i, a) {
+        function filterNext(value) {
+          if (value) {
+            newArr.push(e);
+          }
+          next(undefined, newArr);
         }
-        next(undefined, newArr);
+        fn.call(thisArg, filterNext, e, i, a);
       }
-      fn.call(thisArg, filterNext, e, i, a);
+      return forEachAsync(arr, filterFn, thisArg);
     }
-    return forEachAsync(arr, filterFn, thisArg);
-  }
 
-  function mapAsync(arr, fn, thisArg) {
-    var newArr = []
-      ;
+  , map: function (arr, fn, thisArg) {
+      var newArr = []
+        ;
 
-    function mapFn(next, e, i, a) {
-      function mapNext(value) {
-        newArr.push(value);
-        next(undefined, newArr);
+      function mapFn(next, e, i, a) {
+        function mapNext(value) {
+          newArr.push(value);
+          next(undefined, newArr);
+        }
+        fn.call(thisArg, mapNext, e, i, a);
       }
-      fn.call(thisArg, mapNext, e, i, a);
+      return forEachAsync(arr, mapFn, thisArg);
     }
-    return forEachAsync(arr, mapFn, thisArg);
-  }
 
-  function reduceAsync(arr, fn, thisArg) {
-    var result = arr[0]
-      ;
+  , reduce: function (arr, fn, thisArg) {
+      var result = arr[0]
+        ;
 
-    function reduceFn(next, e, i, a) {
-      function reduceNext(value) {
-        result = value;
-        next(undefined, result);
+      function reduceFn(next, e, i, a) {
+        function reduceNext(value) {
+          result = value;
+          next(undefined, result);
+        }
+        fn.call(thisArg, reduceNext, result, e, i + 1, a);
       }
-      fn.call(thisArg, reduceNext, result, e, i + 1, a);
+      return forEachAsync(arr.slice(1), reduceFn, thisArg);
     }
-    return forEachAsync(arr.slice(1), reduceFn, thisArg);
-  }
 
-  function reduceRightAsync(arr, fn, thisArg) {
-    var result = arr[arr.length - 1]
-      ;
+  , reduceRight: function (arr, fn, thisArg) {
+      var result = arr[arr.length - 1]
+        ;
 
-    function reduceRightFn(next, e, i, a) {
-      function reduceRightNext(value) {
-        result = value;
-        next(undefined, result);
+      function reduceRightFn(next, e, i, a) {
+        function reduceRightNext(value) {
+          result = value;
+          next(undefined, result);
+        }
+        fn.call(thisArg, reduceRightNext, result, e, a.length - (i + 1), a);
       }
-      fn.call(thisArg, reduceRightNext, result, e, a.length - (i + 1), a);
+      return forEachAsync(arr.slice(0, arr.length - 1).reverse(), reduceRightFn, thisArg);
     }
-    return forEachAsync(arr.slice(0, arr.length - 1).reverse(), reduceRightFn, thisArg);
-  }
+  };
 
-  exports.forEachAsync = forEachAsync;
-  exports.everyAsync = everyAsync;
-  exports.someAsync = someAsync;
-  exports.filterAsync = filterAsync;
-  exports.mapAsync = mapAsync;
-  exports.reduceAsync = reduceAsync;
-  exports.reduceRightAsync = reduceRightAsync;
+  ArrayAsync.__methods = Object.keys(ArrayAsync);
+  ArrayAsync.infect = function (thing) {
+    ArrayAsync.__methods.forEach(function (key) {
+      thing[key + 'Async'] = ArrayAsync[key];
+    });
+  };
+
+  ArrayAsync.infect(exports);
+  exports.ArrayAsync = ArrayAsync;
 }('undefined' !== typeof exports && exports || new Function('return this')()));
