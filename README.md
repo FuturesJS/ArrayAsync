@@ -3,7 +3,7 @@ ArrayAsync
 
 v3.x - Diet Cola Edition
 
-Async counterparts for each of the Array methods
+ArrayAsync provides asynchronous counterparts for each of the Array iterate methods
 
   * `forEachAsync`
   * `everyAsync`
@@ -17,7 +17,9 @@ Each of the other array methods is a thin (12-line long) wrapper around the
 diet (27-line long) [`forEachAsync`](https://github.com/FuturesJS/forEachAsync),
 which is the core workhorse.
 
-The might all work, but map, reduce, and reduceRight haven't been tested yet
+Where size is a concern and you don't need all 86 lines of code,
+I would invite you to simply look at the source and copy/paste
+what you need (and attribute, of course).
 
 Browser Installation
 ===
@@ -49,4 +51,21 @@ Node Installation
 
 ```bash
 npm install array-async
+```
+
+```javascript
+(function () {
+  'use strict';
+
+  var filterAsync = require('async-array').filterAsync
+    ;
+
+  filterAsync(['dogs', 'cats', 'octocats'], function (next, element) {
+    askTheUserIfTheyLikeThis(element, function (likesIt) {
+      next(likesIt);
+    });
+  }).then(function (newArr) {
+    showTheUserThingsTheyLike(newArr);
+  });
+}());
 ```

@@ -1,0 +1,38 @@
+{
+  "name": "array-async",
+  "version": "3.0.0-rc1",
+  "description": "FuturesJS/ArrayAsync - The diet cola of asynchronous array utilities.",
+  "main": "array-async.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/FuturesJS/ArrayAsync.git"
+  },
+  "keywords": [
+    "forEach",
+    "every",
+    "some",
+    "map",
+    "reduce",
+    "reduceRight",
+    "filter",
+    "forEachAsync",
+    "everyAsync",
+    "someAsync",
+    "mapAsync",
+    "reduceAsync",
+    "reduceRightAsync",
+    "filterAsync",
+    "async"
+  ],
+  "author": "AJ ONeal <coolaj86@gmail.com> (http://coolaj86.info/)",
+  "license": "Apache2",
+  "bugs": {
+    "url": "https://github.com/FuturesJS/ArrayAsync/issues"
+  }
+}
