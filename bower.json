@@ -8,6 +8,7 @@
   ],
   "description": "Async counterparts for each of the Array methods - forEachAsync, everyAsync, someAsync, filterAsync, mapAsync, reduceAsync, reduceRightAsync",
   "keywords": [
+    "futuresjs",
     "forEach",
     "every",
     "some",
