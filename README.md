@@ -11,7 +11,7 @@ ArrayAsync provides asynchronous counterparts for each of the Array iterate meth
   * `filterAsync`
   * `mapAsync`
   * `reduceAsync`
-  * `reduceRightAsync\*` (uses reversed copy of original array)
+  * `reduceRightAsync`\* (uses reversed copy of original array)
 
 Each of the other array methods is a thin (12-line long) wrapper around the
 diet (27-line long) [`forEachAsync`](https://github.com/FuturesJS/forEachAsync),
