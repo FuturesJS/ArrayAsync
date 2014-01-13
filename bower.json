@@ -1,0 +1,35 @@
+{
+  "name": "ArrayAsync",
+  "main": "array-async.js",
+  "version": "3.0.0",
+  "homepage": "https://github.com/FuturesJS/ArrayAsync",
+  "authors": [
+    "AJ ONeal <coolaj86@gmail.com>"
+  ],
+  "description": "Async counterparts for each of the Array methods - forEachAsync, everyAsync, someAsync, filterAsync, mapAsync, reduceAsync, reduceRightAsync",
+  "keywords": [
+    "forEach",
+    "every",
+    "some",
+    "map",
+    "reduce",
+    "reduceRight",
+    "filter",
+    "forEachAsync",
+    "everyAsync",
+    "someAsync",
+    "mapAsync",
+    "reduceAsync",
+    "reduceRightAsync",
+    "filterAsync",
+    "async"
+  ],
+  "license": "Apache-v2",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

@@ -1,6 +1,6 @@
 {
   "name": "array-async",
-  "version": "3.0.0-rc1",
+  "version": "3.0.0",
   "description": "FuturesJS/ArrayAsync - The diet cola of asynchronous array utilities.",
   "main": "array-async.js",
   "directories": {
