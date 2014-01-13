@@ -24,6 +24,10 @@ what you need (and attribute, of course).
 Browser Installation
 ===
 
+```bash
+bower install ArrayAsync
+```
+
 ```html
 <script src="https://raw.github.com/FuturesJS/forEachAsync/master/forEachAsync.js"></script>
 <script src="https://raw.github.com/FuturesJS/ArrayAsync/master/array-async.js"></script>
